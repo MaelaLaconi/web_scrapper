@@ -8,7 +8,7 @@ Created on Tue Sep 14 17:27:22 2021
 import requests
 from bs4 import BeautifulSoup
 
-links = []
+'''links = []
 for i in range(26):
     
     
@@ -49,18 +49,26 @@ print(len(links))
 with open('urls.txt', 'w') as file:
     for link in links:
         file.write(link + '\n')
-        
+       
+'''
 with open('urls.txt', 'r') as file:
-    for row in file:
-        print("debut" + row + "fin")
-        
-        
-        
-        
-        
-        
-        
-        
+    with open('pays.csv', 'w') as outfile:
+        outfile.write('pays, population\n')
+        for row in file:     
+            
+            url = row.strip()
+            
+            response = requests.get(url)
+            
+            if response.ok:
+                soup = BeautifulSoup(response.text, 'lxml')
+                country = soup.find('tr', {'id':'places_country_or_district__row'}).find('td', {'class':'w2p_fw'})
+                
+                population = soup.find('tr', {'id':'places_population__row'}).find('td', {'class':'w2p_fw'})
+                outfile.write(country.text + ', ' + population.text.replace(',', '') + '\n')
+                print('Pays : ' + str(country.text) + ' avec comme population : ' + str(population.text))
+                    
+                    
         
         
         
