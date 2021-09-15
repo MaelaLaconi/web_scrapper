@@ -44,8 +44,15 @@ for i in range(26):
             links.append('http://example.python-scraping.com' +  link)
     
 print(len(links))
+
+#write in a txt file
+with open('urls.txt', 'w') as file:
+    for link in links:
+        file.write(link + '\n')
         
-        
+with open('urls.txt', 'r') as file:
+    for row in file:
+        print("debut" + row + "fin")
         
         
         
